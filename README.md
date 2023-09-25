@@ -1,8 +1,8 @@
 # DocTime-MERN-
-frontend -> 
+cd frontend -> 
 1-> npm install
 -> npm start
 
-backend->
+cd backend->
 1-> npm install
 2-> npm run start-dev

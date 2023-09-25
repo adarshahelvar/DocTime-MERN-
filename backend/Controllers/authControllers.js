@@ -66,10 +66,11 @@ export const register = async (req, res, next) => {
 // User login
 export const login = async (req, res, next) => {
   const { email } = req.body;
+  console.log(email);
   try {
     let user = null;
     const patinet = await User.findOne({ email: email });
-    const doctor = await User.findOne({ email: email });
+    const doctor = await Doctor.findOne({ email: email });
     if (patinet) {
       user = patinet;
     }
