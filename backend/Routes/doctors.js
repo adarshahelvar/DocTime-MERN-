@@ -5,12 +5,16 @@ import {
   getSingleDoctor,
   getAllDoctor,
 } from "../Controllers/doctorController.js";
-import { authenticate, restrict } from '../auth/verifyToken.js';
+import { authenticate, restrict } from "../auth/verifyToken.js";
+import reviewRouter from "./reviews.js";
 
 const router = express.Router();
 
-router.put("/:id",authenticate,restrict(["doctor"]), updateDoctor);
-router.delete("/:id",authenticate,restrict(["doctor"]), deleteDoctor);
+// Nested routing for review
+router.use("/:doctorId/reviews", reviewRouter);
+
+router.put("/:id", authenticate, restrict(["doctor"]), updateDoctor);
+router.delete("/:id", authenticate, restrict(["doctor"]), deleteDoctor);
 router.get("/:id", getSingleDoctor);
 router.get("/", getAllDoctor);
 
