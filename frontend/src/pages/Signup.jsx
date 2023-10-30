@@ -2,31 +2,34 @@ import React, { useState } from "react";
 import signupImg from "../assets/images/signup.gif";
 import avater from "../assets/images/doctor-img01.png";
 import { Link } from "react-router-dom";
+import uploadImageToCloudinay from "../utils/uploadCloudinary";
 
 const Signup = () => {
   const [selectedFile, setSelectedFile] = useState(null);
-  const [previewURL, setPreviewURL] = useState('');
+  const [previewURL, setPreviewURL] = useState("");
   const [formData, setFormData] = useState({
-    name:'',
+    name: "",
     email: "",
     password: "",
-    photo:selectedFile,
-    gender:'',
-    role:'patient',
+    photo: selectedFile,
+    gender: "",
+    role: "patient",
   });
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleFileInputChange = async(event) => {
+  const handleFileInputChange = async (event) => {
     const file = event.target.files[0];
+    const data = await uploadImageToCloudinay(file)
     // later adding things
-    console.log(file);
-  }
-  const submitHandler = async(event)=>{
-    event.preventDefault()
-  }
+    console.log(data);
+  };
+  const submitHandler = async (event) => {
+    // console.log(formData);
+    event.preventDefault();
+  };
 
   return (
     <section className="px-5 xl:px-0">
@@ -62,7 +65,6 @@ const Signup = () => {
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  
                   className="w-full pr-4 px-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColoor rounded-md cursor-pointer"
                 />
               </div>
@@ -83,7 +85,7 @@ const Signup = () => {
                     name="role"
                     id=""
                     value={formData.role}
-                  onChange={handleInputChange}
+                    onChange={handleInputChange}
                     className="text-textColor font-semibold text-[15px] leading-7 px-4 py-3 focus:outline-none"
                   >
                     <option value="patient">Patient</option>
@@ -97,7 +99,7 @@ const Signup = () => {
                     name="gender"
                     id=""
                     value={formData.gender}
-                  onChange={handleInputChange}
+                    onChange={handleInputChange}
                     className="text-textColor font-semibold text-[15px] leading-7 px-4 py-3 focus:outline-none"
                   >
                     <option value="">Select</option>
@@ -129,19 +131,19 @@ const Signup = () => {
                 </div>
               </div>
               <div className="mt-7">
-            <button
-              type="submit"
-              className="w-full bg-primaryColor text-white text-[18px] leading-[30px] rounded-lg px-4 py-3"
-            >
-              Sign Up
-            </button>
-          </div>
-          <p className="mt-5 text-textColor text-ceenter">
-            Already have an account?
-            <Link to="/login" className="text-primaryColor ">
-              Login
-            </Link>
-          </p>
+                <button
+                  type="submit"
+                  className="w-full bg-primaryColor text-white text-[18px] leading-[30px] rounded-lg px-4 py-3"
+                >
+                  Sign Up
+                </button>
+              </div>
+              <p className="mt-5 text-textColor text-ceenter">
+                Already have an account?
+                <Link to="/login" className="text-primaryColor ">
+                  Login
+                </Link>
+              </p>
             </form>
           </div>
         </div>
