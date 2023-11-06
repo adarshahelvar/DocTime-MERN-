@@ -33,7 +33,7 @@ const Login = () => {
         body: JSON.stringify(formData),
       });
       const result = await res.json();
-      console.log(result)
+      // console.log(result)
       if (!result.success) {
         throw new Error(result.message);
       }
@@ -88,7 +88,7 @@ console.log("hello world!");
               type="submit"
               className="w-full bg-primaryColor text-white text-[18px] leading-[30px] rounded-lg px-4 py-3"
             >
-              Login
+              { loading ? <HashLoader size={25} color="#fff" /> :  'Login'}
             </button>
           </div>
           <p className="mt-5 text-textColor text-ceenter">
