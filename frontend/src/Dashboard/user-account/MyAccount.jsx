@@ -11,7 +11,8 @@ const MyAccount = () => {
     dispatch({ type: "LOGOUT" });
   };
   return (
-    <div className="max-w-[1770px] px-5 mx-auto mt-2">
+    <section>
+      <div className="max-w-[1770px] px-5 mx-auto mt-2">
       <div className="grid md:grid-cols-3 gap-10">
         <div className="pb-[50px] px-[30px] rounded-md">
           <div className="flex items-center justify-center">
@@ -79,6 +80,7 @@ const MyAccount = () => {
         </div>
       </div>
     </div>
+    </section>
   );
 };
 
