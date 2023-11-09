@@ -4,9 +4,10 @@ import { authContext } from "../../context/AuthContext";
 import MyBookings from "./MyBookings";
 import Profile from "./Profile";
 import useGetProfile from "../../hooks/useFetch";
-import { BASE_URL } from "../../config";
+import { BASE_URL, token } from "../../config";
 import Loading from "../../components/Loading/Loading";
 import Error from "../../components/Error/Error";
+import { useParams } from "react-router-dom";
 
 const MyAccount = () => {
   const { dispatch } = useContext(authContext);
@@ -16,18 +17,46 @@ const MyAccount = () => {
     loading,
     error,
   } = useGetProfile(`${BASE_URL}/users/profile/me`);
-  console.log(userData, "userData");
+  // console.log(userData, "userData");
+  const userID = userData._id;
+  // console.log(userID);
 
   const handleLogout = () => {
     dispatch({ type: "LOGOUT" });
   };
+
+  // const handleDeleteAccount = () =>{
+  //   // console.log("deleteAccount clicked");
+
+  // }
+
+  const handleDeleteAccount = async () => {
+    try {
+      const response = await fetch(`${BASE_URL}/users/${userID}`, {
+        method: "DELETE",
+        // headers: {
+        //   Authorization: `Bearer ${token}`,
+        // },
+      });
+
+      if (response.ok) {
+        console.log("Account deleted successfully");
+        handleLogout();
+      } else {
+        const errorData = await response.json();
+        console.error("Error deleting account:", errorData);
+      }
+    } catch (error) {
+      console.error("An error occurred while deleting the account:", error);
+    }
+  };
+
   return (
     <section>
       <div className="max-w-[1770px] px-5 mx-auto mt-2">
-
         {loading && !error && <Loading />}
 
-        {error &&!loading && <Error errorMessage={error} />}
+        {error && !loading && <Error errorMessage={error} />}
 
         {!loading && !error && (
           <div className="grid md:grid-cols-3 gap-10">
@@ -63,7 +92,10 @@ const MyAccount = () => {
                 >
                   Logout
                 </button>
-                <button className="w-full bg-red-600 p-3 text-[16px] leading-7 rounded-md mt-2 text-white">
+                <button
+                  className="w-full bg-red-600 p-3 text-[16px] leading-7 rounded-md mt-2 text-white"
+                  onClick={handleDeleteAccount}
+                >
                   Delete account
                 </button>
               </div>
